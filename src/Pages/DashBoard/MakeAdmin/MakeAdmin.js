@@ -14,7 +14,7 @@ const MakeAdmin = () => {
   const handleBlur = (e) => {
     setEmail(e.target.value);
   };
-  console.log(email);
+
   const handleAdmin = (e) => {
     SetIsloding(true);
     const user = { email };

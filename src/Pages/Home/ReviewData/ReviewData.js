@@ -4,7 +4,7 @@ import React, { useState } from "react";
 
 const ReviewData = ({ review }) => {
   const { name, email, description, rating } = review;
-  console.log(review);
+
   return (
     <Grid item xs={12} sm={12} md={4}>
       <Paper

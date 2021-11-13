@@ -26,7 +26,6 @@ const Login = () => {
     const newUser = { ...user };
     newUser[field] = value;
     setUser(newUser);
-    console.log(user);
   };
   const handleLogin = (e) => {
     loginWithEmail(user.email, user.password, location, history);

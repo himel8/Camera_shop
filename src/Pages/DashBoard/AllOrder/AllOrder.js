@@ -24,7 +24,6 @@ const AllOrder = () => {
   const { user } = useAuth();
   const [orders, setOrders] = useState([]);
   const handleChange = (e, id) => {
-    console.log(e, id);
     setOrderAction(e.target?.value);
     // const url = `https://lit-falls-18743.herokuapp.com/orders/${id}`;
     // console.log(url); // fetch(url, {
@@ -41,7 +40,7 @@ const AllOrder = () => {
     //     }
     //   });
   };
-  console.log(orderAction);
+
   const handleDelete = (id) => {
     const url = `https://lit-falls-18743.herokuapp.com/orders/${id}`;
     fetch(url, {

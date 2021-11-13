@@ -6,7 +6,7 @@ import useAuth from "../../../../Hooks/useAuth";
 
 const Product = ({ product, setOrderSuccess }) => {
   const { name, image, price } = product;
-  console.log();
+
   const { user } = useAuth();
   const history = useHistory();
   const [newOrder, setNewOrder] = useState({});
@@ -20,10 +20,8 @@ const Product = ({ product, setOrderSuccess }) => {
   };
   const handleOrder = () => {
     if (user.email) {
-      console.log("cl");
       const orderData = { ...data };
 
-      console.log(orderData);
       fetch("https://lit-falls-18743.herokuapp.com/orders", {
         method: "POST",
         headers: {

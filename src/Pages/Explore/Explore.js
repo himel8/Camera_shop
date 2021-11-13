@@ -7,7 +7,7 @@ import Navbar from "../Shared/Navbar/Navbar";
 
 const Explore = () => {
   const { products, orderSuccess, setOrderSuccess } = useProducts();
-  console.log(products);
+
   return (
     <Box>
       <Navbar />

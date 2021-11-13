@@ -21,7 +21,7 @@ const AddProduct = () => {
     products[field] = value;
     setNewProduct(products);
   };
-  console.log(newProduct);
+
   const handleAddProduct = (e) => {
     setIsLoding(true);
     // send products to server

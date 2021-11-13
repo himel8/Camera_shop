@@ -17,7 +17,7 @@ const Review = () => {
   const [reviewSuccess, setReviewSuccess] = useState(false);
   const [isLoding, setIsLoding] = useState(false);
   const [rateValue, setRateValue] = useState(2);
-  console.log(user);
+
   const handleBlur = (e) => {
     const field = e.target.name;
     const value = e.target.value;
@@ -29,7 +29,7 @@ const Review = () => {
     newReview[field] = value;
     setReview(newReview);
   };
-  console.log(review);
+
   const handleReview = (e) => {
     setIsLoding(true);
     fetch("https://lit-falls-18743.herokuapp.com/reviews", {
