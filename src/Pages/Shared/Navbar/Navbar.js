@@ -17,7 +17,7 @@ const Navbar = () => {
         <Alert severity="success">user successfully added!</Alert>
       )}
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar className="navbar">
           <IconButton
             size="large"
             edge="start"
@@ -27,8 +27,13 @@ const Navbar = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
+          <Typography
+            className="mobileHide"
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1 }}
+          >
+            Capture Zone
           </Typography>
           <Link style={{ color: "#fff", textDecoration: "none" }} to="/">
             <Button color="inherit">Home</Button>
@@ -37,17 +42,15 @@ const Navbar = () => {
             <Button color="inherit">Explore</Button>
           </Link>
           <Link
+            className="mobileHide"
             style={{ color: "#fff", textDecoration: "none" }}
             to="/purchase"
           >
             <Button color="inherit">Purchase</Button>
           </Link>
-          <Link style={{ color: "#fff", textDecoration: "none" }} to="/contact">
-            <Button color="inherit">Contact</Button>
-          </Link>
 
           {user.email ? (
-            <Box>
+            <Box className="mobile-display">
               <Link
                 style={{ color: "#fff", textDecoration: "none" }}
                 to="/dashboard"
