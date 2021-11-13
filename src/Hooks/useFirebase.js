@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 initialization();
 const useFirebase = () => {
   const [user, setUser] = useState({});
+  const [admin, setAdmin] = useState(false);
   const [successUser, setSuccessUser] = useState(false);
   const [error, setError] = useState("");
   const [isLoding, setIsLoding] = useState(true);
@@ -27,7 +28,7 @@ const useFirebase = () => {
         // Signed in
         const newUser = { email, displayName: name };
         setUser(newUser);
-        saveUser(email, name);
+        saveUser(email, name, "POST");
         updateProfile(auth.currentUser, {
           displayName: name,
         })
@@ -95,7 +96,12 @@ const useFirebase = () => {
       return unsubscribe;
     });
   }, []);
-
+  // admin useEffect
+  useEffect(() => {
+    fetch(`https://lit-falls-18743.herokuapp.com/users/${user.email}`)
+      .then((res) => res.json())
+      .then((data) => setAdmin(data.admin));
+  }, [user.email]);
   // log Out
   const logOut = () => {
     setIsLoding(true);
@@ -109,10 +115,10 @@ const useFirebase = () => {
       })
       .finally(() => setIsLoding(false));
   };
-  const saveUser = (email, displayName) => {
+  const saveUser = (email, displayName, method) => {
     const user = { email, displayName };
     fetch("https://lit-falls-18743.herokuapp.com/users", {
-      method: "POST",
+      method: method,
       headers: {
         "content-type": "application/json",
       },
@@ -121,6 +127,7 @@ const useFirebase = () => {
   };
   return {
     user,
+    admin,
     error,
     isLoding,
     successUser,

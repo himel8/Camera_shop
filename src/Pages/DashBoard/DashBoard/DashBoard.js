@@ -26,12 +26,14 @@ import {
 import AddProduct from "../AddProduct/AddProduct";
 import AllOrder from "../AllOrder/AllOrder";
 import useAuth from "../../../Hooks/useAuth";
+import MakeAdmin from "../MakeAdmin/MakeAdmin";
+import AdminRoute from "../AdminRoute/AdminRoute";
 
 const drawerWidth = 240;
 
 const DashBoard = (props) => {
   const { window } = props;
-  const { user, logOut } = useAuth();
+  const { admin, user, logOut } = useAuth();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   let { path, url } = useRouteMatch();
   const handleDrawerToggle = () => {
@@ -75,42 +77,49 @@ const DashBoard = (props) => {
             My Orders
           </Button>
         </Link>
-        <Link style={{ textDecoration: "none" }} to={`${url}/manageOrder`}>
-          <Button
-            sx={{ color: "#222", fontWeight: 700, fontSize: "14px" }}
-            variant="text"
-          >
-            <span style={{ marginRight: "20px" }}>
-              <FontAwesomeIcon
-                sx={{ fontSize: "10px" }}
-                icon={faCartArrowDown}
-              />
-            </span>
-            Manage Orders
-          </Button>
-        </Link>
-        <Link style={{ textDecoration: "none" }} to={`${url}/addproduct`}>
-          <Button
-            sx={{ color: "#222", fontWeight: 700, fontSize: "14px" }}
-            variant="text"
-          >
-            <span style={{ marginRight: "20px" }}>
-              <FontAwesomeIcon sx={{ fontSize: "10px" }} icon={faCartPlus} />
-            </span>
-            Add Product
-          </Button>
-        </Link>
-        <Link style={{ textDecoration: "none" }} to={`${url}/review`}>
-          <Button
-            sx={{ color: "#222", fontWeight: 700, fontSize: "14px" }}
-            variant="text"
-          >
-            <span style={{ marginRight: "20px" }}>
-              <FontAwesomeIcon sx={{ fontSize: "10px" }} icon={faUserAlt} />
-            </span>
-            Make an Admin
-          </Button>
-        </Link>
+        {admin && (
+          <Box>
+            <Link style={{ textDecoration: "none" }} to={`${url}/manageOrder`}>
+              <Button
+                sx={{ color: "#222", fontWeight: 700, fontSize: "14px" }}
+                variant="text"
+              >
+                <span style={{ marginRight: "20px" }}>
+                  <FontAwesomeIcon
+                    sx={{ fontSize: "10px" }}
+                    icon={faCartArrowDown}
+                  />
+                </span>
+                Manage Orders
+              </Button>
+            </Link>
+            <Link style={{ textDecoration: "none" }} to={`${url}/addproduct`}>
+              <Button
+                sx={{ color: "#222", fontWeight: 700, fontSize: "14px" }}
+                variant="text"
+              >
+                <span style={{ marginRight: "20px" }}>
+                  <FontAwesomeIcon
+                    sx={{ fontSize: "10px" }}
+                    icon={faCartPlus}
+                  />
+                </span>
+                Add Product
+              </Button>
+            </Link>
+            <Link style={{ textDecoration: "none" }} to={`${url}/makeanadmin`}>
+              <Button
+                sx={{ color: "#222", fontWeight: 700, fontSize: "14px" }}
+                variant="text"
+              >
+                <span style={{ marginRight: "20px" }}>
+                  <FontAwesomeIcon sx={{ fontSize: "10px" }} icon={faUserAlt} />
+                </span>
+                Make an Admin
+              </Button>
+            </Link>
+          </Box>
+        )}
         <Link style={{ textDecoration: "none" }} to={`${url}/review`}>
           <Button
             sx={{ color: "#222", fontWeight: 700, fontSize: "14px" }}
@@ -234,12 +243,15 @@ const DashBoard = (props) => {
           <Route exact path={path}>
             <MyOrder />
           </Route>
-          <Route exact path={`${path}/addproduct`}>
+          <AdminRoute exact path={`${path}/addproduct`}>
             <AddProduct />
-          </Route>
-          <Route exact path={`${path}/manageOrder`}>
+          </AdminRoute>
+          <AdminRoute exact path={`${path}/manageOrder`}>
             <AllOrder />
-          </Route>
+          </AdminRoute>
+          <AdminRoute exact path={`${path}/makeanadmin`}>
+            <MakeAdmin />
+          </AdminRoute>
         </Switch>
       </Box>
     </Box>
