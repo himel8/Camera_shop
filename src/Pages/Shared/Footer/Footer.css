@@ -1,0 +1,23 @@
+.depertment-link a{
+    text-decoration: none;
+    font-size: 18px;
+    color: #fff;
+}
+.custom-time-bg{
+   background-color:  #061127;
+}
+.footer hr{
+    margin-right: 20%;
+}
+.custom-line{
+    position: relative;
+}
+.custom-line::before{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    background-color: #fff;
+    top: 0;
+    left: 0;
+}
