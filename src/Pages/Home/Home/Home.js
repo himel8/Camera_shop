@@ -4,6 +4,8 @@ import Banner from "../Banner/Banner";
 import FlashSale from "../FlashSale/FlashSale";
 import Footer from "../../Shared/Footer/Footer";
 import Products from "../Products/Products";
+import ReviewsData from "../ReviewsData/ReviewsData";
+import Newsalatter from "../Newslatter/Newsalatter";
 
 const Home = () => {
   return (
@@ -12,6 +14,8 @@ const Home = () => {
       <Banner />
       <FlashSale />
       <Products />
+      <ReviewsData />
+      <Newsalatter />
       <Footer />
     </div>
   );

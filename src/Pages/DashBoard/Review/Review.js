@@ -1,88 +1,90 @@
-import React, { useState } from "react";
 import {
-  Container,
   TextField,
   Typography,
   TextareaAutosize,
   Button,
-  Alert,
+  Rating,
   CircularProgress,
+  Alert,
 } from "@mui/material";
+import { Box } from "@mui/system";
+import React, { useState } from "react";
+import useAuth from "../../../Hooks/useAuth";
 
-const AddProduct = () => {
-  const [newProduct, setNewProduct] = useState({});
-  const [productSuccess, setProductSuccess] = useState(false);
+const Review = () => {
+  const { user } = useAuth();
+  const [review, setReview] = useState({});
+  const [reviewSuccess, setReviewSuccess] = useState(false);
   const [isLoding, setIsLoding] = useState(false);
+  const [rateValue, setRateValue] = useState(2);
+  console.log(user);
   const handleBlur = (e) => {
-    const date = new Date();
     const field = e.target.name;
     const value = e.target.value;
-    const products = { ...newProduct, date: date.toLocaleDateString() };
-    products[field] = value;
-    setNewProduct(products);
+    const newReview = {
+      ...review,
+      name: user?.displayName,
+      email: user?.email,
+    };
+    newReview[field] = value;
+    setReview(newReview);
   };
-  console.log(newProduct);
-  const handleAddProduct = (e) => {
+  console.log(review);
+  const handleReview = (e) => {
     setIsLoding(true);
-    // send products to server
-
-    fetch("https://lit-falls-18743.herokuapp.com/products", {
+    fetch("https://lit-falls-18743.herokuapp.com/reviews", {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(newProduct),
+      body: JSON.stringify(review),
     })
       .then((res) => res.json())
       .then((data) => {
-        setIsLoding(false);
         if (data.insertedId) {
-          setProductSuccess(true);
+          setIsLoding(false);
+          setReviewSuccess(true);
         }
       });
-
-    // e.preventDefault();
+    e.preventDefault();
   };
   return (
-    <Container>
+    <div>
       <Typography
         sx={{ fontFamily: "Poppins", my: 3 }}
         variant="h4"
         gutterBottom
         component="div"
       >
-        Add Products
+        Review Page
       </Typography>
       {!isLoding && (
-        <form onSubmit={handleAddProduct}>
+        <form onSubmit={handleReview}>
           <TextField
             sx={{ width: "60%", my: 2 }}
-            name="name"
-            onBlur={handleBlur}
-            type="text"
+            disabled
+            defaultValue={user.displayName}
             id="outlined-basic"
-            label="Product Name"
             variant="outlined"
           />
           <TextField
             sx={{ width: "60%", mb: 2 }}
-            name="image"
-            onBlur={handleBlur}
-            type="text"
+            defaultValue={user.email}
+            disabled
             id="outlined-basic"
-            label="Product Image link"
             variant="outlined"
           />
-          <TextField
-            sx={{ width: "60%", mb: 2 }}
-            name="price"
-            onBlur={handleBlur}
-            type="number"
-            id="outlined-basic"
-            label="Product Price"
-            variant="outlined"
-          />
-
+          <Box>
+            <Typography component="legend">Please rating us</Typography>
+            <Rating
+              onBlur={handleBlur}
+              name="rating"
+              value={rateValue}
+              onChange={(event, newValue) => {
+                setRateValue(newValue);
+              }}
+            />
+          </Box>
           <TextareaAutosize
             maxRows={8}
             name="description"
@@ -102,16 +104,16 @@ const AddProduct = () => {
             type="submit"
             variant="contained"
           >
-            Add Product
+            Add Review
           </Button>
         </form>
       )}
       {isLoding && <CircularProgress />}
-      {productSuccess && (
-        <Alert severity="success">Product added successfully</Alert>
+      {reviewSuccess && (
+        <Alert severity="success">Review added successfully</Alert>
       )}
-    </Container>
+    </div>
   );
 };
 
-export default AddProduct;
+export default Review;

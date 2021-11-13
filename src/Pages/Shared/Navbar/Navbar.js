@@ -36,6 +36,12 @@ const Navbar = () => {
           <Link style={{ color: "#fff", textDecoration: "none" }} to="/shop">
             <Button color="inherit">Explore</Button>
           </Link>
+          <Link
+            style={{ color: "#fff", textDecoration: "none" }}
+            to="/purchase"
+          >
+            <Button color="inherit">Purchase</Button>
+          </Link>
           <Link style={{ color: "#fff", textDecoration: "none" }} to="/contact">
             <Button color="inherit">Contact</Button>
           </Link>

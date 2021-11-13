@@ -27,7 +27,7 @@ const MyOrder = () => {
       });
   };
   useEffect(() => {
-    fetch(`https://lit-falls-18743.herokuapp.com/orders?email=${user.email}`)
+    fetch(`https://lit-falls-18743.herokuapp.com/orders/${user.email}`)
       .then((res) => res.json())
       .then((data) => setOrders(data));
   }, []);

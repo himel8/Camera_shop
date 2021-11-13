@@ -14,7 +14,6 @@ import MyOrder from "../MyOrder/MyOrder";
 import { Button } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faArrowAltCircleUp,
   faArrowCircleLeft,
   faCartArrowDown,
   faCartPlus,
@@ -28,6 +27,8 @@ import AllOrder from "../AllOrder/AllOrder";
 import useAuth from "../../../Hooks/useAuth";
 import MakeAdmin from "../MakeAdmin/MakeAdmin";
 import AdminRoute from "../AdminRoute/AdminRoute";
+import Payment from "../Payment/Payment";
+import Review from "../Review/Review";
 
 const drawerWidth = 240;
 
@@ -41,7 +42,13 @@ const DashBoard = (props) => {
   };
   const drawer = (
     <div>
-      <Toolbar>{user.displayName}</Toolbar>
+      <Toolbar>
+        <Link style={{ textDecoration: "none" }} to="/">
+          <Button sx={{ color: "#222", fontWeight: 700, fontSize: "14px" }}>
+            {user.displayName}
+          </Button>
+        </Link>
+      </Toolbar>
       <Divider />
       <Box
         sx={{
@@ -131,7 +138,7 @@ const DashBoard = (props) => {
             Review
           </Button>
         </Link>
-        <Link style={{ textDecoration: "none" }} to={`${url}/pay`}>
+        <Link style={{ textDecoration: "none" }} to={`${url}/payment`}>
           <Button
             sx={{ color: "#222", fontWeight: 700, fontSize: "14px" }}
             variant="text"
@@ -242,6 +249,12 @@ const DashBoard = (props) => {
         <Switch>
           <Route exact path={path}>
             <MyOrder />
+          </Route>
+          <Route path={`${path}/payment`}>
+            <Payment />
+          </Route>
+          <Route path={`${path}/review`}>
+            <Review />
           </Route>
           <AdminRoute exact path={`${path}/addproduct`}>
             <AddProduct />

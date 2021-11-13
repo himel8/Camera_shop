@@ -1,4 +1,4 @@
-import { Button, Typography } from "@mui/material";
+import { Button, MenuItem, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import useAuth from "../../../Hooks/useAuth";
 import Table from "@mui/material/Table";
@@ -8,10 +8,40 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-
+import { Box } from "@mui/system";
+const orderActions = [
+  {
+    value: "Pending",
+    label: "Pending",
+  },
+  {
+    value: "Shiped",
+    label: "Shiped",
+  },
+];
 const AllOrder = () => {
+  const [orderAction, setOrderAction] = useState("Pending");
   const { user } = useAuth();
   const [orders, setOrders] = useState([]);
+  const handleChange = (e, id) => {
+    console.log(e, id);
+    setOrderAction(e.target?.value);
+    // const url = `https://lit-falls-18743.herokuapp.com/orders/${id}`;
+    // console.log(url); // fetch(url, {
+    //   method: "PUT",
+    //   headers: {
+    //     "content-type": "application/json",
+    //   },
+    //   body: JSON.stringify(id),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     if (data.acknowledged) {
+    //       alert("success");
+    //     }
+    //   });
+  };
+  console.log(orderAction);
   const handleDelete = (id) => {
     const url = `https://lit-falls-18743.herokuapp.com/orders/${id}`;
     fetch(url, {
@@ -31,7 +61,6 @@ const AllOrder = () => {
       .then((res) => res.json())
       .then((data) => setOrders(data));
   }, []);
-  console.log(orders);
   return (
     <div>
       <Typography
@@ -66,12 +95,33 @@ const AllOrder = () => {
                 <TableCell align="right">{row.email}</TableCell>
                 <TableCell align="right">{row.date}</TableCell>
                 <TableCell align="right">
-                  <Button
-                    onClick={() => handleDelete(row._id)}
-                    variant="contained"
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-around",
+                    }}
                   >
-                    Delete
-                  </Button>
+                    <Button
+                      onClick={() => handleDelete(row._id)}
+                      variant="contained"
+                    >
+                      Delete
+                    </Button>
+                    <TextField
+                      id="outlined-select-currency"
+                      select
+                      value={orderAction}
+                      // onChange={() => handleChange(row._id)}
+                      onChange={handleChange}
+                    >
+                      {orderActions.map((option) => (
+                        <MenuItem key={option.value} value={option.value}>
+                          {option.label}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  </Box>
                 </TableCell>
               </TableRow>
             ))}
