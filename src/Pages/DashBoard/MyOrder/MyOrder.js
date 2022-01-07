@@ -1,13 +1,14 @@
 import { Button, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import useAuth from "../../../Hooks/useAuth";
+import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import React, { useEffect, useState } from "react";
+import useAuth from "../../../Hooks/useAuth";
+import Stripe from "../Payment/Stripe/Stripe";
 
 const MyOrder = () => {
   const { user } = useAuth();
@@ -50,6 +51,7 @@ const MyOrder = () => {
               <TableCell align="right">Price</TableCell>
               <TableCell align="right">email</TableCell>
               <TableCell align="right">Order Date</TableCell>
+              <TableCell align="right">Payment</TableCell>
               <TableCell align="right">Action</TableCell>
             </TableRow>
           </TableHead>
@@ -66,6 +68,39 @@ const MyOrder = () => {
                 <TableCell align="right">{row.email}</TableCell>
                 <TableCell align="right">{row.date}</TableCell>
                 <TableCell align="right">
+                  {row?.action ? (
+                    <Typography
+                      sx={{ fontFamily: "Poppins", my: 3, mx: 2 }}
+                      variant="p"
+                      gutterBottom
+                      component="span"
+                    >
+                      PAID
+                    </Typography>
+                  ) : (
+                    <Stripe data={{ row }} />
+                  )}
+                </TableCell>
+                <TableCell align="right">
+                  {row?.action ? (
+                    <Typography
+                      sx={{ fontFamily: "Poppins", my: 3, mx: 2 }}
+                      variant="p"
+                      gutterBottom
+                      component="span"
+                    >
+                      Shipped
+                    </Typography>
+                  ) : (
+                    <Typography
+                      sx={{ fontFamily: "Poppins", my: 3, mx: 2 }}
+                      variant="p"
+                      gutterBottom
+                      component="span"
+                    >
+                      prossesing
+                    </Typography>
+                  )}
                   <Button
                     onClick={() => handleDelete(row._id)}
                     variant="contained"

@@ -1,0 +1,63 @@
+import React, { useEffect, useState } from "react";
+import StripeCheckout from "react-stripe-checkout";
+
+const Stripe = ({ data }) => {
+  console.log(data);
+  const { productName, _id, price, email } = data;
+  const [stripeToken, setStripeToken] = useState(null);
+  const onToken = (token) => {
+    setStripeToken(token);
+  };
+
+  const desc = `Your are purchasing ${productName}`;
+
+  useEffect(() => {
+    fetch("https://git.heroku.com/lit-falls-18743.git/payment", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify({
+        tokenId: stripeToken?.id,
+        amount: { price },
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {});
+  }, [stripeToken]);
+
+  if (stripeToken) {
+    fetch(`https://git.heroku.com/lit-falls-18743.git/orders/${_id}`, {
+      method: "PUT",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(_id),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.modifiedCount) {
+          alert("paid successfull");
+        }
+      });
+  }
+  return (
+    <div>
+      {stripeToken ? (
+        <span className="text-green-600 text-lg uppercase font-bold">PAID</span>
+      ) : (
+        <StripeCheckout
+          name="Camera Shop"
+          email={email}
+          image="https://i.pinimg.com/originals/41/1a/60/411a605985ffea28ccf550d6a1442073.png"
+          description={desc}
+          amount={price * 100}
+          token={onToken}
+          stripeKey={process.env.REACT_APP_STRIPE_SECRET_KEY}
+        />
+      )}
+    </div>
+  );
+};
+
+export default Stripe;

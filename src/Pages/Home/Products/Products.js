@@ -1,11 +1,11 @@
 import { Alert, Container, Grid, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import useProducts from "../../../Hooks/useProducts";
 import Product from "./Product/Product";
 
 const Products = () => {
   const { products, orderSuccess, setOrderSuccess } = useProducts();
-  const displayProducts = products.filter((pd) => pd.name.includes("Digital"));
+  const displayProducts = products.filter((pd) => pd.name?.includes("Digital"));
 
   return (
     <Container>
