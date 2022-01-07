@@ -3,16 +3,16 @@ import StripeCheckout from "react-stripe-checkout";
 
 const Stripe = ({ data }) => {
   console.log(data);
-  const { productName, _id, price, email } = data;
+  const { productName, _id, price, email } = data.row;
   const [stripeToken, setStripeToken] = useState(null);
   const onToken = (token) => {
     setStripeToken(token);
   };
-
+  console.log(productName, _id, price, email);
   const desc = `Your are purchasing ${productName}`;
 
   useEffect(() => {
-    fetch("https://git.heroku.com/lit-falls-18743.git/payment", {
+    fetch("https://lit-falls-18743.herokuapp.com/payment", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -23,16 +23,16 @@ const Stripe = ({ data }) => {
       }),
     })
       .then((res) => res.json())
-      .then((data) => {});
+      .then((data) => console.log(data));
   }, [stripeToken]);
-
+  console.log(stripeToken);
   if (stripeToken) {
-    fetch(`https://git.heroku.com/lit-falls-18743.git/orders/${_id}`, {
+    fetch(`https://lit-falls-18743.herokuapp.com/orders/${_id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify(_id),
+      body: JSON.stringify(data),
     })
       .then((res) => res.json())
       .then((data) => {
